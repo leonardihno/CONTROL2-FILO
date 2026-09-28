@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control de Lectura 2 · Platón y Aristóteles</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f4ee;--panel:#fffdf9;--ink:#262220;--soft:#58524c;--line:#e3ddd1;--a:#a8632a;--as:#f3e3d2;--ad:#7a4419;--b:#35657f;--bs:#dbe8ec;--bd:#234656;--p:#6b5b95;--ps:#e7e2f2;--nb:#fbf6e3;--nl:#d9c877}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Lora',Georgia,serif;line-height:1.65}
+h1,h3,h4,button,.anchor{font-family:'Inter',sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 50px}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-top:14px}
+header .wrap{padding-bottom:0}
+.tr{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
+h1{font-size:1.28rem;margin:0}h1 span{color:var(--soft);font-weight:400}
+.ct{font-size:.72rem;color:var(--soft)}
+.track{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:10px}
+#fill{height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--p),var(--b));transition:width .3s}
+#lbl{font-size:.72rem;color:var(--soft);margin:4px 0 10px}
+.tabs{display:flex;gap:4px}
+.tab{flex:1;padding:11px 8px;font-size:.9rem;font-weight:600;background:none;border:0;border-bottom:3px solid transparent;color:var(--soft);cursor:pointer;border-radius:6px 6px 0 0}
+.tab.on[data-t=g]{color:var(--ad);border-color:var(--a);background:var(--as)}
+.tab.on[data-t=c]{color:var(--bd);border-color:var(--b);background:var(--bs)}
+.tab.on[data-t=p]{color:var(--p);border-color:var(--p);background:var(--ps)}
+.panel{display:none;padding-top:22px}.panel.on{display:block}
+.sub{display:inline-flex;background:var(--line);border-radius:99px;padding:3px;margin-bottom:20px}
+.sub button{border:0;background:none;padding:7px 16px;border-radius:99px;font-size:.82rem;font-weight:600;color:var(--soft);cursor:pointer}
+.sub button.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 5px rgba(0,0,0,.1)}
+.sp{display:none}.sp.on{display:block}
+.lede{font-size:.95rem;color:var(--soft);font-style:italic;margin-bottom:18px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.step h3{margin:0 0 6px;font-size:1rem}.step p{margin:0;font-size:.96rem}
+[data-a=g] .step{border-left:5px solid var(--a)}[data-a=c] .step{border-left:5px solid var(--b)}
+.anchor{display:inline-block;font-size:.68rem;font-weight:700;padding:1px 8px;border-radius:99px;border:1px solid;white-space:nowrap;margin-left:4px}
+[data-a=g] .anchor{background:var(--as);color:var(--ad);border-color:var(--a)}
+[data-a=c] .anchor{background:var(--bs);color:var(--bd);border-color:var(--b)}
+.acc{display:flex;flex-direction:column;gap:10px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.hd{width:100%;text-align:left;background:none;border:0;border-left:5px solid;padding:14px 18px;font-size:.98rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:10px;color:var(--ink)}
+[data-a=g] .hd{border-color:var(--a)}[data-a=g] .hd.open{background:var(--as)}
+[data-a=c] .hd{border-color:var(--b)}[data-a=c] .hd.open{background:var(--bs)}
+.hd small{display:block;font-weight:400;font-size:.75rem;color:var(--soft)}
+.hd .ch{transition:transform .2s}.hd.open .ch{transform:rotate(180deg)}
+.bd{max-height:0;overflow:hidden;transition:max-height .25s}
+.bd div{padding:8px 20px 18px;font-size:.96rem}
+.card{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--p);border-radius:14px;padding:20px 22px;margin-bottom:18px}
+.card h3{margin:0 0 4px;font-size:1.05rem;color:var(--p)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+@media(max-width:640px){.cols{grid-template-columns:1fr}}
+.col{border-radius:10px;padding:12px 14px;font-size:.9rem}
+.col.g{background:var(--as)}.col.c{background:var(--bs)}
+.col b{display:block;font-family:'Inter',sans-serif;font-size:.8rem;margin-bottom:6px}
+.col.g b{color:var(--ad)}.col.c b{color:var(--bd)}
+.col.g .anchor{background:var(--as);color:var(--ad);border-color:var(--a)}
+.col.c .anchor{background:var(--bs);color:var(--bd);border-color:var(--b)}
+.q{background:#fff;border:1px dashed var(--p);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:.88rem}
+.q b{font-family:'Inter',sans-serif;font-size:.78rem;color:var(--p);display:block;margin-bottom:4px}
+footer{text-align:center;font-size:.75rem;color:var(--soft);margin-top:30px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="tr"><h1>Control de Lectura 2 <span>· Filosofía y Ética</span></h1><span class="ct">Guthrie (Platón) · Campbell (Aristóteles)</span></div>
+<div class="track"><div id="fill"></div></div><div id="lbl"></div>
+<nav class="tabs">
+<button class="tab on" data-t="g" onclick="tab('g')">Platón (Guthrie)</button>
+<button class="tab" data-t="c" onclick="tab('c')">Aristóteles (Campbell)</button>
+<button class="tab" data-t="p" onclick="tab('p')">Puentes conceptuales</button>
+</nav></div></header>
+<div class="wrap" id="app"></div>
+<script>
+// Las etiquetas [p. X] se convierten en marcas de página.
+var D={
+g:{name:"Guthrie, «Platón 1 y 2» (pp. 93-136)",
+corto:[
+["Por qué Platón defiende la ciudad-estado","Platón retoma la obra de Sócrates y quiere salvar la polis del ataque de la filosofía natural, los sofistas y el misticismo. Su respuesta es reformarla y fortalecerla, no abolirla [pp. 93-97]."],
+["La doctrina de las ideas","Para salvar el conocimiento frente al flujo heraclíteo y sostener principios morales absolutos, Platón afirma que existen Ideas eternas, fuera del espacio y el tiempo, de las que las cosas participan imperfectamente [pp. 100-103]."],
+["Alma, reminiscencia y mito","El alma es inmortal y preexiste al cuerpo; conocer es recordar. Lo que la razón no demuestra, el mito lo sugiere [pp. 107-112]."],
+["Justicia como orden del alma y de la ciudad","Contra el hedonismo sofista, la justicia es armonía (kosmos y taxis): tres clases en la ciudad y tres partes en el alma (nous, thymos y deseos) [pp. 121-130]."],
+["Teología y cierre","El alma, automovida, es la causa primera: la inteligencia es anterior al azar y a la fuerza ciega [pp. 132-134]."]],
+ext:[
+["Motivos y contexto de Platón","pp. 93-97","Platón busca consolidar la obra de Sócrates y defender la ciudad-estado como unidad política, económica y social [p. 93]. Su ruina llegó con Filipo y Alejandro, aunque venía de antes [p. 93]. Estado y religión eran una sola cosa: no había «Iglesia» y Atenea era la patrona de la ciudad [p. 94]. Las leyes se creían de origen divino, comunicadas por Apolo [pp. 94-95]. El ataque venía de tres frentes: filosofía natural (los dioses quizá no existen), sofistas (las leyes las hacen los hombres) y misticismo órfico (la religión es asunto del alma individual) [p. 96]. Platón eligió reformar y purificar la polis, no abolirla; en la República el individuo se subordina al bienestar común [p. 97]."],
+["Sócrates, objeciones y las Ideas","pp. 98-103","Sócrates pedía definir la justicia y cuidar el alma. La objeción: ¿existe la justicia absoluta fuera de los actos justos, o es un fuego fatuo? [p. 99]. La psyche era para los griegos un vapor sin importancia; Sócrates la hace sede de las facultades morales e intelectuales [pp. 99-100]. Heráclito: todo fluye, no hay conocimiento; Parménides: lo real es permanente y solo la mente lo alcanza [p. 100]. Platón concluye que los objetos del conocimiento existen en un mundo ideal, fuera del espacio y el tiempo; «idea» significa modelo o patrón [p. 101]. Sin una base común no podríamos llamar «bueno» a un vino y a un jugador [pp. 101-102]. Lo perceptible participa imperfectamente de las Ideas, relación que Platón expresa con metáforas [p. 103]. La doctrina se extiende a todas las especies naturales, como el caballo [p. 103]."],
+["Ideas hoy, alma y reminiscencia","pp. 104-109","«Por la belleza son bellas las cosas bellas» significa que no se explica un caso sin la clase a la que pertenece [p. 104]. Guthrie muestra que hoy tratamos las leyes naturales o la «influenza» como si fueran entidades reales [pp. 105-106]. Platón une las Ideas con la enseñanza órfica y pitagórica: el alma es inmortal (o preexistente), el cuerpo es prisión o tumba y saber es recordar [pp. 107-108]. No hay dos cosas exactamente iguales, así que la idea de igualdad no sale de los sentidos: estos solo la despiertan [p. 109]. La filosofía es «preparación para la muerte» [p. 109]."],
+["Mitos y valor del mito","pp. 110-112","El mito de Er cuenta las encarnaciones del alma; beber del Leteo explica que olvidemos lo visto [p. 110]. En el Fedro, el alma es un carro alado: el auriga es la razón, un caballo es el valor y el otro los apetitos [p. 111]. El mito no se toma como literal: abre camino a verdades que el razonamiento dialéctico no demuestra [p. 112]."],
+["El filósofo gobernante","pp. 112-114","En la alegoría de la caverna, quien sale a la luz siente el deber de volver a instruir a sus compañeros [p. 113]. Los gobernantes deben conocer la Idea del Bien; «no tendrán fin los trastornos hasta que vayan juntos el poder político y la filosofía» [p. 113]. Su formación: educación elemental hasta los 17-18 años, tres de preparación física y militar, diez de matemáticas, cinco de filosofía y cargos a los 35 [pp. 113-114]. Para ellos el poder es carga, no tentación; son los más verdaderamente felices [p. 114]."],
+["Respuesta ética a los sofistas","pp. 115-121","En sociedades simples no hay conflicto entre deber e interés [p. 115]. En Grecia surge la oposición sofista entre «naturaleza» y «ley»; Calicles identifica lo bueno con lo agradable, y nace el hedonismo [pp. 116-117]. Sócrates responde que hace falta conocimiento: la búsqueda irreflexiva del placer causa desdicha, y lo bueno es lo útil o beneficioso [pp. 117-118]. En el Menón, valor y otras cualidades solo benefician si las guía la sabiduría (nous), por eso virtud es sabiduría [pp. 119-120]. Límite: queda sin responder «¿beneficioso para qué?», y el poder también puede ser fin (Guthrie menciona a Hitler) [pp. 120-121]."],
+["Orden del alma y de la ciudad","pp. 121-130","Todo tiene un ergon (función) y una arete (estado óptimo para cumplirla); ese orden es kosmos y taxis [pp. 122-124]. Ejemplos: la lanzadera del tejedor y el obrero [pp. 122-123]. La justicia se defiende por sí misma, sin premios ni reputación [pp. 123-124]. La ciudad tiene tres clases: gobernantes (sabiduría), guerreros (valor) y productores; la templanza es el acuerdo sobre quién gobierna y la justicia, que cada clase cumpla su función [pp. 125-127]. Se separan poder político y económico [p. 127]. El alma tiene tres partes: nous (razón), thymos (fuerza de voluntad) y deseos; la justicia es su armonía, su salud, y la injusticia una enfermedad [pp. 127-128]. Se prueba con el conflicto entre sed y razón; Sócrates no consideró el thymos [pp. 129-130]."],
+["Teología y cierre","pp. 130-136","La defensa teológica está en Leyes X. Los adversarios dicen que la naturaleza es azar, que el arte es humano y que la justicia es convención [pp. 131-132]. Platón responde que naturaleza y arte coinciden y que la inteligencia es anterior al azar [p. 132]. El movimiento originario es automovimiento y solo la psyche es automotor, así que el alma es la causa primera [p. 133]. Platón es indiferente al monoteísmo o politeísmo: lo importante es que el alma buena dirige el cosmos [p. 134]. Cierra con la estética: la belleza terrenal guía hacia la belleza en sí, y belleza y verdad son lo mismo [pp. 135-136]."]]},
+c:{name:"Campbell, «Aristóteles: la comunidad cívica» (pp. 71-89)",
+corto:[
+["Enfoque naturalista y teleológico","Aristóteles ve la sociedad como una empresa ética que nace de la sociabilidad natural. Cada ser tiene un telos hacia el que se desarrolla, y este se descubre observando [pp. 71-73]."],
+["Teoría del hombre","El hombre es animal racional y social. La virtud es un término medio y se adquiere por educación y hábito; la amistad (philia) es el vínculo social [pp. 74-76]."],
+["La polis","Familia (oikos), aldea y polis: esta última es el telos de las anteriores y busca la vida buena, autosuficiente [pp. 77-79]."],
+["Justicia y constitución","La justicia distributiva reparte según el mérito y la rectificadora corrige. Hay seis tipos de polis; Aristóteles prefiere una forma mixta cercana a la politeia [pp. 79-84]."],
+["Jerarquía y críticas","Aristóteles no cree en la igualdad humana. Se le critica la falacia naturalista, la esclavitud natural y su idea de comunidad, utópica y opresiva en sociedades grandes [pp. 84-89]."]],
+ext:[
+["El enfoque de Aristóteles","pp. 71-74","Para Aristóteles la sociedad es una empresa ética que busca la bondad moral y la excelencia intelectual [p. 71]. Estudió con Platón, fundó el Liceo, no era ateniense y fue tutor de Alejandro [p. 71]. Sus obras clave para la teoría social son la Ética a Nicómaco y la Política [p. 72]. Su filosofía es naturalista (empírica; estudiaron más de 150 constituciones) y teleológica (cada ser tiene una causa final y lo natural es bueno) [p. 72]. A diferencia de Platón, cree que las formas se estudian observando el mundo físico; investiga causas finales, eficientes y materiales [p. 73]. La virtud es el funcionamiento apropiado del hombre, es decir, la felicidad (eudaimonia) [p. 73]. La política es la ciencia maestra y da prioridad al bien de la comunidad sobre el individuo, con cierto holismo normativo y un aspecto autoritario [p. 74]."],
+["La teoría del hombre","pp. 74-76","El hombre es un animal con razón y habla. La razón práctica controla los apetitos y la teórica comprende el universo; su cima es la vida de contemplación [p. 74]. Sin educación, los hombres tienden a ser avaros y cobardes; sin ley serían «el peor de los animales» [p. 75]. Las virtudes morales son un medio entre extremos (valentía entre cobardía y temeridad) y se forman con educación estricta hasta hacerse hábito [p. 75]. La sociabilidad natural se reúne bajo la amistad (philia); la más alta es entre iguales que se aman por su bondad, posible solo entre pocos ciudadanos [p. 76]. Como pocos la alcanzan, las sociedades reales requieren justicia, educación estatal y coacción [p. 76]."],
+["La teoría de la sociedad: oikos, aldea y polis","pp. 77-79","Aristóteles usa el término polis, la comunidad cívica; koinonia es todo grupo social [p. 77]. La familia (oikos) es la unidad económica básica y en ella la amistad no es de iguales: el amo gobierna a la mujer, a los hijos y a los esclavos de forma distinta [pp. 77-78]. La aldea agrupa familias por utilidad [p. 78]. La polis es autosuficiente y permite amistad genuina entre iguales; aunque aparece después, es anterior como telos [pp. 78-79]. Aristóteles rechaza la comunidad total de propiedad y de personas, pero defiende comidas comunes [p. 79]."],
+["Justicia, ley y ciudadanía","pp. 79-82","La justicia es el principio del orden político [p. 80]. La distributiva reparte según el mérito (virtud en la aristocracia, riqueza en la oligarquía) y la rectificadora corrige injusticias [p. 80]. Lo moral y lo legal no se distinguen; la ley tiene un núcleo natural y un elemento convencional que varía entre polis [p. 80]. Los gobernantes están sometidos a la ley y no defiende una democracia total, aunque cualquier ciudadano puede ser elegido para cargos [p. 81]. Ciudadano es quien tiene derecho a ocupar un cargo [p. 81]. La virtud del hombre bueno coincide con la del buen ciudadano, y no hay división entre público y privado [p. 82]."],
+["Tipos de polis","pp. 82-84","Seis tipos según quién gobierna y para qué: monarquía, aristocracia y politeia son las buenas; tiranía, oligarquía y democracia, sus versiones corruptas [pp. 82-83]. Aristóteles prefiere una forma mixta cercana a la politeia, con elemento oligárquico y peso de las clases medias [p. 83]. Reconoce la «sabiduría colectiva», pero teme que la masa pobre carezca del ocio para gobernar [pp. 83-84]. Su modelo es una comunidad de iguales unidos por amistad y leyes impersonales, y admite que en la práctica opera cierta oligarquía [p. 84]."],
+["Jerarquía social","pp. 84-85","Aristóteles desconfía de la democracia porque no cree en la igualdad humana: las mujeres son inferiores en razón y existen esclavos naturales [p. 84]. Termina en una jerarquía: ricos virtuosos, propietarios agrícolas, trabajadores del comercio y el trabajo manual, y por último esclavos naturales y extranjeros [p. 85]."],
+["Criticismo y valoración","pp. 85-89","Falacia naturalista: pasa de lo que es natural a lo que debe ser, y su uso de «naturaleza» es ambiguo [pp. 85-86]. Su retrato de Atenas es inexacto y su polis agraria era frágil ante imperios como el de Alejandro [p. 86]. La esclavitud natural es una afirmación empírica sin justificar, quizá ideológica [p. 86]. Sus aportes: la base económica de la estabilidad social y el hombre a la vez sociable y egoísta [p. 87]. La razón práctica da medios, no fines, y su «término medio» es poco convincente [pp. 87-88]. Hay inconsistencia entre ideales democráticos y valores aristocráticos (Marx vio la polis como asociación contra una clase productiva) [p. 88]. Aun así, amistad, ciudadanía y gobierno de la ley siguen siendo atractivos, pero en sociedades grandes sus fusiones parecerían utópicas y opresivas [pp. 88-89]."]]},
+puentes:[
+["1. Ideas platónicas frente a formas aristotélicas","Dos maneras de explicar lo que las cosas tienen en común",
+"Las Ideas existen en un mundo ideal, fuera del espacio y el tiempo; las cosas participan imperfectamente de ellas [pp. 101-103].",
+"Las formas se estudian empíricamente observando el mundo físico; Platón es idealista y Aristóteles naturalista [p. 73].",
+"Explique en qué se distingue la doctrina platónica de las Ideas de la teoría aristotélica de las formas y qué consecuencias tiene para conocer la sociedad."],
+["2. La ciudad ideal: clases y propiedad","Platón reforma la polis, Aristóteles la describe y matiza",
+"Tres clases (gobernantes, guerreros, productores); los gobernantes viven sin propiedad ni familia y se separan poder político y económico [pp. 97, 125-127].",
+"Rechaza la comunidad completa de propiedad y personas, aunque acepta comidas comunes; la polis reúne pequeños agricultores, comerciantes y artesanos [p. 79].",
+"Compare cómo conciben Platón y Aristóteles la propiedad y la organización de clases en la ciudad ideal."],
+["3. Función, virtud y buena vida","Ergon y arete frente a telos y eudaimonia",
+"Todo tiene un ergon; la arete es el estado óptimo para cumplirlo; la justicia es la armonía de nous, thymos y deseos [pp. 124, 127-128].",
+"Cada ser se mueve hacia su telos; la virtud es el funcionamiento apropiado del hombre y equivale a la felicidad (eudaimonia), con la virtud como término medio [pp. 72-73, 75].",
+"Explique cómo la idea de función en Platón y la de telos en Aristóteles fundamentan su concepto de virtud."]]
+};
+var total=13,seen={};
+function fmt(t){return t.replace(/\[([^\]]+)\]/g,'<span class="anchor">$1</span>')}
+function build(k){
+ var d=D[k],h='<section class="panel'+(k=='g'?' on':'')+'" data-a="'+k+'" id="P'+k+'"><div class="sub"><button class="on" onclick="subt(\''+k+'\',0)">Resumen corto</button><button onclick="subt(\''+k+'\',1)">Resumen extenso</button></div>';
+ h+='<div class="sp on"><p class="lede">'+d.name+'. Repaso rápido de cinco puntos.</p>';
+ d.corto.forEach(function(s,i){h+='<div class="step"><h3>'+(i+1)+'. '+s[0]+'</h3><p>'+fmt(s[1])+'</p></div>'});
+ h+='</div><div class="sp"><p class="lede">Desarrollo por secciones. Las etiquetas indican la página de origen.</p><div class="acc">';
+ d.ext.forEach(function(s,i){var id=k+i;h+='<div class="item"><button class="hd" onclick="acc(this,\''+id+'\')"><span>'+s[0]+'<small>'+s[1]+'</small></span><span class="ch">▾</span></button><div class="bd"><div>'+fmt(s[2])+'</div></div></div>'});
+ return h+'</div></div></section>'}
+function bridges(){
+ var h='<section class="panel" id="Pp"><p class="lede">Conexiones entre ambas lecturas, pensadas para preguntas comparativas.</p>';
+ D.puentes.forEach(function(b){h+='<div class="card"><h3>'+b[0]+'</h3><p class="lede" style="font-size:.8rem;margin:0 0 8px">'+b[1]+'</p><div class="cols"><div class="col g"><b>Guthrie (Platón)</b>'+fmt(b[2])+'</div><div class="col c"><b>Campbell (Aristóteles)</b>'+fmt(b[3])+'</div></div><div class="q"><b>Posible pregunta de control</b>'+b[4]+'</div></div>'});
+ return h+'</section>'}
+document.getElementById('app').innerHTML=build('g')+build('c')+bridges()+'<footer>Herramienta de repaso para el Control de Lectura 2, Filosofía y Ética, Universidad ESAN. Basada en Guthrie (1994) y Campbell. Uso de estudio personal; contrasta siempre con las lecturas.</footer>';
+function prog(){var n=Object.keys(seen).length;document.getElementById('fill').style.width=Math.round(n/total*100)+'%';document.getElementById('lbl').textContent=n+' de '+total+' secciones extensas revisadas'}
+function tab(t){document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.t==t)});['g','c','p'].forEach(function(x){document.getElementById('P'+x).classList.toggle('on',x==t)})}
+function subt(k,i){var p=document.getElementById('P'+k);p.querySelectorAll('.sub button').forEach(function(b,j){b.classList.toggle('on',j==i)});p.querySelectorAll('.sp').forEach(function(s,j){s.classList.toggle('on',j==i)})}
+function acc(h,id){var b=h.nextElementSibling;if(h.classList.toggle('open')){b.style.maxHeight=b.scrollHeight+'px';seen[id]=1;prog()}else b.style.maxHeight=null}
+prog();
+</script>
+</body>
+</html>
